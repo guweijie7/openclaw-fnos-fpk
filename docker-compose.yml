@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  openclaw:
+    image: ghcr.io/openclaw/openclaw:latest
+    container_name: openclaw
+    restart: unless-stopped
+    ports:
+      - "${OPENCLAW_PORT:-18789}:18789"
+    volumes:
+      - /Data/openclaw:/root/.openclaw
+      - /Data/openclaw/workspace:/root/.openclaw/workspace
+    environment:
+      - TZ=${TZ:-Asia/Shanghai}
+      - OPENCLAW_PORT=${OPENCLAW_PORT:-18789}
+      - NODE_ENV=production
+    networks:
+      - openclaw_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:18789/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+networks:
+  openclaw_network:
+    driver: bridge

@@ -1,0 +1,47 @@
+{
+  "name": "OpenClaw",
+  "version": "2026.2.26",
+  "description": "OpenClaw - 个人 AI 助手，运行在你自己的设备上",
+  "author": "OpenClaw Community",
+  "homepage": "https://openclaw.ai",
+  "icon": "public/icon.png",
+  "category": "AI Assistant",
+  "type": "docker",
+  "arch": ["x86_64", "amd64"],
+  "min_fnos_version": "1.0.0",
+  "docker_compose": "docker-compose.yml",
+  "scripts": {
+    "pre_install": "scripts/pre_install.sh",
+    "post_install": "scripts/post_install.sh",
+    "pre_uninstall": "scripts/pre_uninstall.sh",
+    "post_uninstall": "scripts/post_uninstall.sh"
+  },
+  "ports": [
+    {
+      "port": 18789,
+      "protocol": "tcp",
+      "description": "OpenClaw Gateway API"
+    }
+  ],
+  "volumes": [
+    {
+      "mount_point": "/Data/openclaw",
+      "container_path": "/root/.openclaw",
+      "description": "OpenClaw 工作区和配置"
+    }
+  ],
+  "env": [
+    {
+      "key": "OPENCLAW_PORT",
+      "default": "18789",
+      "description": "Gateway 端口"
+    },
+    {
+      "key": "TZ",
+      "default": "Asia/Shanghai",
+      "description": "时区设置"
+    }
+  ],
+  "permissions": ["network", "storage"],
+  "tags": ["AI", "Assistant", "LLM", "Chatbot"]
+}
