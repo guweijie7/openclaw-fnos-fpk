@@ -28,6 +28,24 @@
       "mount_point": "/Data/openclaw",
       "container_path": "/root/.openclaw",
       "description": "OpenClaw 工作区和配置"
+    },
+    {
+      "mount_point": "/Data",
+      "container_path": "/mnt/fnos/Data",
+      "description": "飞牛数据目录 (只读)",
+      "permission": "readonly"
+    },
+    {
+      "mount_point": "/Home",
+      "container_path": "/mnt/fnos/Home",
+      "description": "飞牛用户目录 (只读)",
+      "permission": "readonly"
+    },
+    {
+      "mount_point": "/Public",
+      "container_path": "/mnt/fnos/Public",
+      "description": "飞牛公共目录 (只读)",
+      "permission": "readonly"
     }
   ],
   "env": [
@@ -42,6 +60,6 @@
       "description": "时区设置"
     }
   ],
-  "permissions": ["network", "storage"],
+  "permissions": ["network", "storage", "filesystem_read"],
   "tags": ["AI", "Assistant", "LLM", "Chatbot"]
 }

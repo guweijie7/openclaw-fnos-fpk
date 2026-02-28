@@ -8,14 +8,29 @@ services:
     ports:
       - "${OPENCLAW_PORT:-18789}:18789"
     volumes:
+      # OpenClaw 配置和工作区
       - /Data/openclaw:/root/.openclaw
       - /Data/openclaw/workspace:/root/.openclaw/workspace
+      
+      # 飞牛 NAS 文件系统访问
+      - /Data:/mnt/fnos/Data:ro
+      - /Home:/mnt/fnos/Home:ro
+      - /Public:/mnt/fnos/Public:ro
+      
+      # 如果需要写入权限（取消注释）
+      # - /Data/openclaw/output:/mnt/fnos/output:rw
     environment:
       - TZ=${TZ:-Asia/Shanghai}
       - OPENCLAW_PORT=${OPENCLAW_PORT:-18789}
       - NODE_ENV=production
+      # 文件访问路径配置
+      - FNOS_DATA_PATH=/mnt/fnos/Data
+      - FNOS_HOME_PATH=/mnt/fnos/Home
+      - FNOS_PUBLIC_PATH=/mnt/fnos/Public
     networks:
       - openclaw_network
+    # 允许访问宿主机网络（可选，需要更高权限）
+    # network_mode: "host"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:18789/health"]
       interval: 30s
